@@ -1,0 +1,10 @@
+# Sample Flight Logs
+
+This directory contains **sanitized sample UAV flight logs** used for integrity verification testing.
+
+The logs are representative of:
+- time-ordered telemetry
+- post-mission storage
+- verification and tamper-detection scenarios
+
+No operational or sensitive data is included.
