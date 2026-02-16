@@ -1,0 +1,234 @@
+@import url('variables.css');
+
+.flight-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-primary);
+  color: var(--color-secondary-alt);
+  border-radius: 1rem;
+}
+
+.flight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.flight-title {
+  margin: 0 0 0.4rem;
+  font-size: 1.8rem;
+}
+
+.flight-key-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.flight-key-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.flight-key-chip {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background-color: var(--color-secondary-alt);
+  color: var(--color-primary);
+  font-size: 0.8rem;
+}
+
+.flight-summary {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.summary-item {
+  background-color: var(--color-secondary-alt);
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.8rem;
+  min-width: 120px;
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary-alt);
+}
+
+.summary-value {
+  display: block;
+  margin-top: 0.2rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+}
+
+.verify-actions {
+  margin: 0.75rem 0 0.75rem;
+  display: flex;
+  justify-content: center;
+}
+
+.button-primary {
+  background-color: var(--color-secondary-alt);
+  color: var(--color-primary);
+  border: none;
+  border-radius: 0.65rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Verification section */
+
+.verification-section {
+  margin-top: 1rem;
+  border-top: 1px solid var(--color-secondary);
+  padding-top: 1rem;
+}
+
+.verification-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  color: var(--color-primary);
+}
+
+/* Spinner */
+
+.verify-spinner {
+  display: none;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  color: var(--color-primary-alt);
+  font-size: 0.9rem;
+}
+
+.spinner-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 3px solid var(--color-secondary);
+  border-top-color: var(--color-secondary-alt);
+  animation: spinner-rotate 0.8s linear infinite;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error + result messaging */
+
+.verify-error {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+/* Table container – primary background */
+
+.verify-table-container {
+  margin-top: 0.8rem;
+  background-color: var(--color-primary);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.verify-table-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+  color: var(--color-secondary-alt);
+}
+
+.verify-mini-summary {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.verify-table-wrapper {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+/* Table styling */
+
+.verify-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  color: var(--color-secondary-alt);
+}
+
+.verify-table thead {
+  background-color: var(--color-primary-alt);
+  color: var(--color-secondary-alt);
+}
+
+.verify-table th,
+.verify-table td {
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+}
+
+.verify-table tbody tr:nth-child(even) {
+  background-color: rgba(222, 211, 196, 0.1); 
+}
+
+.status-mismatch td,
+.status-shrank td {
+  background-color: rgba(244, 235, 211, 0.16);
+}
+
+.status-missing_onchain td,
+.status-extra_onchain td,
+.status-unknown td {
+  background-color: rgba(222, 211, 196, 0.2);
+}
+
+/* Result bar */
+
+.verify-result-bar {
+  margin-top: 0.9rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.65rem;
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
+  font-size: 0.9rem;
+}
+
+.verify-result-bar--ok {
+  background-color: var(--color-secondary-alt);
+  color: var(--color-primary);
+}
+
+.verify-result-bar--fail {
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+.result-label {
+  font-weight: 600;
+}
+
+.result-text strong {
+  font-weight: 600;
+}

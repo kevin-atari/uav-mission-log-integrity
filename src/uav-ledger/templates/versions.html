@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ flight_id }} · Versions · UAV Ledger{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/versions.css' %}">
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('.verify-form');
+    const panel = document.getElementById('verification-panel');
+    const spinner = document.querySelector('.verify-spinner');
+
+    if (!form || !panel || !spinner) return;
+
+    form.addEventListener('submit', function () {
+      // Reveal verification section and spinner immediately on click
+      panel.style.display = 'block';
+      spinner.style.display = 'flex';
+    });
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="flight-container">
+  <header class="flight-header">
+    <div>
+      <h1 class="flight-title">Flight {{ flight_id }}</h1>
+      <div class="flight-key-row">
+        <span class="flight-key-label">S3 key</span>
+        <code class="flight-key-chip">{{ key }}</code>
+      </div>
+    </div>
+
+    <div class="flight-summary">
+      <div class="summary-item">
+        <span class="summary-label">Uploads</span>
+        <span class="summary-value">{{ version_count }}</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Latest upload</span>
+        <span class="summary-value">
+          {% if latest_version_time %}
+            {{ latest_version_time|date:"Y-m-d H:i:s T" }}
+          {% else %}
+            —
+          {% endif %}
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="verify-actions">
+    <form method="get" class="verify-form">
+      <input type="hidden" name="verify" value="1">
+      <button type="submit" class="button-primary">
+        Verify logs
+      </button>
+    </form>
+  </div>
+
+  <section
+    id="verification-panel"
+    class="verification-section"
+    {% if not verify_summary %}style="display:none"{% endif %}
+  >
+    <h2 class="verification-title">Verification</h2>
+
+    <div class="verify-spinner" {% if verify_summary %}style="display:none"{% endif %}>
+      <div class="spinner-circle"></div>
+      <span>Running verification…</span>
+    </div>
+
+    {% if verify_summary %}
+      {% if verify_summary.error %}
+        <p class="verify-error">
+          Verification failed: {{ verify_summary.error }}
+        </p>
+      {% else %}
+        <div class="verify-table-container">
+          <div class="verify-table-header">
+            <span>Computed Hashes vs On-Chain Hashes</span>
+            <span class="verify-mini-summary">
+              S3: {{ verify_summary.s3_version_count }} ·
+              Checkpoints: {{ verify_summary.onchain_checkpoint_count }} ·
+              Matched: {{ verify_summary.matched_count }}
+            </span>
+          </div>
+
+          <div class="verify-table-wrapper">
+            <table class="verify-table">
+              <thead>
+                <tr>
+                  <th>Seq</th>
+                  <th>S3 VersionId</th>
+                  <th>Size</th>
+                  <th>Computed hash</th>
+                  <th>On-chain hash</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in verify_rows %}
+                  <tr class="status-{{ row.status }}">
+                    <td>{{ row.seq_no }}</td>
+                    <td>{{ row.s3_version_id|default:"—" }}</td>
+                    <td>{{ row.s3_size|default:"—" }}</td>
+                    <td><code>{{ row.computed_hash|default:"—" }}</code></td>
+                    <td><code>{{ row.onchain_hash|default:"—" }}</code></td>
+                    <td>{{ row.status }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {# Result bar #}
+        <div class="verify-result-bar
+          {% if verify_summary.tampered %}verify-result-bar--fail{% else %}verify-result-bar--ok{% endif %}
+        ">
+          <span class="result-label">Result:</span>
+          {% if verify_summary.tampered %}
+            <span class="result-text">
+              ❌ Hash mismatch detected starting at sequence
+              <strong>{{ verify_summary.first_bad_seq }}</strong>. Versions
+              at and after this checkpoint may have been tampered with.
+            </span>
+          {% else %}
+            <span class="result-text">
+              ✅ All versions verified successfully. No tampering detected
+              for this flight.
+            </span>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </section>
+</section>
+{% endblock %}

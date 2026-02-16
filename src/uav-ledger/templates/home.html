@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}UAV Ledger — Home{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="home-card">
+    <h1>UAV Ledger</h1>
+    <p>
+        UAV Ledger is a secure, blockchain-anchored audit system for UAV mission logs.  
+        Each upload is versioned in S3, hashed, and recorded on Ethereum to provide  
+        end-to-end tamper detection and full operational traceability.
+    </p>
+
+    <a href="{% url 'flights_page' %}" class="home-button">
+        View Flight Logs
+    </a>
+</div>
+{% endblock %}

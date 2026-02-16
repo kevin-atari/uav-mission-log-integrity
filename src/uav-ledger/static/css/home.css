@@ -1,0 +1,41 @@
+@import url('variables.css');
+
+.home-card {
+    max-width: 650px;
+    margin: 60px auto;           
+    background: var(--color-primary);
+    color: var(--color-secondary-alt);
+    padding: 40px 50px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.home-card h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.home-card p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.home-button {
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: var(--color-secondary);
+    color: var(--color-primary);
+    transition: 0.2s ease;
+}
+
+.home-button:hover {
+    background: var(--color-secondary-alt);
+    transform: translateY(-2px);
+}
